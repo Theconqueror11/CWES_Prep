@@ -1,41 +1,144 @@
 # Web Requests
 
-## Overview
-Web Requests refer to the process of sending and receiving data over the internet.
+## HTTP
 
-## Types of Web Requests
-Web requests can be categorized into several types:
+HTTP is an application-level protocol used to access the World Wide Web resources. The term hypertext stands for text containing links to other resources and text that the readers can easily interpret.
 
-- **GET**: Retrieves data from a server.
-- **POST**: Sends data to a server.
-- **PUT**: Updates existing data on a server.
-- **DELETE**: Removes data from a server.
+HTTP communication consists of a client and a server, where the client requests the server for a resource. The server processes the requests and returns the requested resource. The default port for HTTP is port 80.
 
-## Components of a Web Request
-A web request typically consists of the following components:
+## cURL
 
-1. **Method**: The type of action to be performed (e.g., GET, POST).
-2. **URL**: The endpoint where the request is sent.
-3. **Headers**: Additional information about the request (e.g., Content-Type, Accept).
-4. **Body**: Contains the data sent with POST or PUT requests.
+cURL (client URL) is a command-line tool and library that primarily supports HTTP along with many other protocols. This makes it a good candidate for scripts as well as automation, making it essential for penetration testing.
 
-## Example of a GET Request
-```http
-GET /api/resource HTTP/1.1
-Host: example.com
-Accept: application/json
-```
+As penetration testers, we are mainly interested in the request and response context, which usually becomes much faster and more convenient than a web browser.
 
-## Example of a POST Request
-```http
-POST /api/resource HTTP/1.1
-Host: example.com
-Content-Type: application/json
+## HTTPS
 
-{
-    "key": "value"
-}
-```
+HTTPS (HTTP Secure) protocol was created, in which all communications are transferred in an encrypted format, so even if a third party intercepts the request, they would not be able to extract the information.
 
-## Conclusion
-Understanding web requests is crucial for web development and API integration. Proper implementation ensures efficient data communication and improves user experience.
+### HTTPS Flow
+
+If we type `http://` instead of `https://` to visit a website that enforces HTTPS, the browser attempts to resolve the domain and redirects the user to the webserver hosting the target website.
+
+#### The HTTPS Handshake Process
+
+1. Client sends a "client hello" packet, giving information about itself
+2. Server replies with "server hello"
+3. Key exchange to exchange SSL certificates
+
+## HTTP Requests and Responses
+
+HTTP communications mainly consist of an HTTP request and an HTTP response. An HTTP request is made by the client (e.g. cURL/browser), and is processed by the server (e.g. web server).
+
+### HTTP Request
+
+| Field   | Example                    | Description                                                                   |
+|---------|----------------------------|-------------------------------------------------------------------------------|
+| Method  | GET                        | The HTTP method or verb, which specifies the type of action to perform.       |
+| Path    | /users/login.html         | The path to the resource being accessed. This field can also be suffixed with a query string (e.g. ?username=user). |
+| Version | HTTP/1.1                  | The third and final field is used to denote the HTTP version.                 |
+
+### HTTP Response
+
+The first line of an HTTP response contains two fields separated by spaces:
+- The HTTP version (e.g. HTTP/1.1)
+- The HTTP response code (e.g. 200 OK)
+
+Response codes are used to determine the request's status. After the first line, the response lists its headers, similar to an HTTP request.
+
+Finally, the response may end with a response body, which is separated by a new line after the headers. The response body is usually defined as HTML code, but can also respond with other code types.
+
+## HTTP Headers
+
+HTTP headers pass information between the client and the server. Some headers are only used with either requests or responses, while some other general headers are common to both.
+
+Headers can have one or multiple values, appended after the header name and separated by a colon.
+
+### General Headers
+
+General headers are used in both HTTP requests and responses. They are contextual and are used to describe the message rather than its contents.
+
+| Header     | Example                                         | Description                                                                            |
+|------------|-------------------------------------------------|----------------------------------------------------------------------------------------|
+| Date       | Date: Wed, 16 Feb 2022 10:38:44 GMT            | Holds the date and time at which the message originated. It's preferred to convert the time to the standard UTC time zone. |
+| Connection | Connection: close                               | Dictates if the current network connection should stay alive after the request finishes. Two commonly used values for this header are `close` and `keep-alive`. |
+
+### Entity Headers
+
+Entity Headers can be common to both the request and response. These headers are used to describe the content (entity) transferred by a message. They are usually found in requests or responses with a body.
+
+| Header          | Example                                | Description                                                                                                                               |
+|-----------------|----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| Content-Type    | Content-Type: text/html                | Used to describe the type of resource being transferred. The value is automatically added by the browsers on the client-side and returned in the server response. |
+| Media-Type      | Media-Type: application/pdf            | The media-type is similar to Content-Type, and describes the data being transferred. This header can play a crucial role in making the server interpret our requests in the way we want. |
+| Boundary         | boundary="b4e4fbd93540"              | Acts as a marker to separate content when there is more than one in the same message. For example, within a form data, this boundary gets used as `--b4e4fbd93540`. |
+| Content-Length   | Content-Length: 385                    | Holds the size of the entity being passed. This header is necessary as the server uses it to read data from the message body, and is automatically generated by the browser. |
+| Content-Encoding | Content-Encoding: gzip                  | Data can undergo multiple transformations before being passed. For example, large amounts of data can be compressed to reduce the message size. The type of encoding being used is specified using this header. |
+
+### Request Headers
+
+The client sends Request Headers in an HTTP transaction. These headers are used in an HTTP request and do not relate to the content of the message.
+
+| Header          | Example                                | Description                                                                                                                               |
+|-----------------|----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| Host            | Host: www.inlanefreight.com            | Used to specify the host being queried for the resource. This can be a domain name or an IP address. HTTP servers can be configured to host different websites. |
+| User-Agent      | User-Agent: curl/7.77.0                | The User-Agent header is used to describe the client requesting resources. This header can reveal a lot about the client, such as the browser, its version, and the operating system. |
+| Referer         | Referer: http://www.inlanefreight.com/ | Denotes where the current request is coming from. For example, clicking a link from Google search results would make https://google.com the referer. |
+| Accept          | Accept: */*                             | The Accept header describes which media types the client can understand. It can contain multiple media types separated by commas. The `*/*` value signifies that all media types are accepted. |
+| Cookie          | Cookie: PHPSESSID=b4e4fbd93540        | Contains cookie-value pairs in the format name=value. A cookie is a piece of data stored on the client-side and on the server, which acts as an identifier. |
+| Authorization    | Authorization: BASIC cGFzc3dvcmQK      | Another method for the server to identify clients. After successful authentication, the server returns a token unique to the client. Unlike cookies, tokens are not stored on the server. |
+
+### Response Headers
+
+Response Headers can be used in an HTTP response and do not relate to the content. Certain response headers such as Age, Location, and Server are used to provide more context about the response.
+
+| Header          | Example                                | Description                                                                                                                               |
+|-----------------|---------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| Server          | Server: Apache/2.2.14 (Win32)           | Contains information about the HTTP server, which processed the request. It can be used to gain information about the server, such as its version, and enumerate vulnerabilities. |
+| Set-Cookie      | Set-Cookie: PHPSESSID=b4e4fbd93540     | Contains the cookies needed for client identification. Browsers parse the cookies and store them for future requests. This header follows the same format as the Cookie header. |
+| WWW-Authenticate | WWW-Authenticate: BASIC realm="localhost" | Notifies the client about the type of authentication required to access the requested resource. |
+
+### Security Headers
+
+With the increase in the variety of browsers and web-based attacks, defining certain headers that enhanced security was necessary. HTTP Security headers are a class of response headers used to enhance the security of a website by restricting the actions or resources that can be loaded by the browser.
+
+| Header                     | Example                          | Description                                                                                                                               |
+|----------------------------|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| Content-Security-Policy     | Content-Security-Policy: script-src 'self'     | Dictates the website's policy towards externally injected resources. This could be JavaScript code as well as script resources. |
+| Strict-Transport-Security    | Strict-Transport-Security: max-age=31536000        | Prevents the browser from accessing the website over the plaintext HTTP protocol, and forces all communication to be carried over HTTPS. |
+| Referrer-Policy            | Referrer-Policy: origin          | Dictates whether the browser should include the value specified via the Referer header or not. It can help in avoiding disclosing sensitive URLs and information. |
+
+## HTTP Methods
+
+### Request Methods
+
+| Method  | Description                                                                        |
+|---------|-------------------------------------------------------------------------------------|
+| GET     | Requests a specific resource. Additional data can be passed to the server via query strings in the URL (e.g. ?param=value). |
+| POST    | Sends data to the server. It can handle multiple types of input, such as text, PDFs, and other forms of binary data. This data is appended in the request body present after the headers. |
+| HEAD    | Requests the headers that would be returned if a GET request was made to the server. It doesn't return the request body and is usually made to check the response length before downloading resources. |
+| PUT     | Creates new resources on the server. Allowing this method without proper controls can lead to uploading malicious resources. |
+| DELETE  | Deletes an existing resource on the webserver. If not properly secured, can lead to Denial of Service (DoS) by deleting critical files on the web server. |
+| OPTIONS | Returns information about the server, such as the methods accepted by it.            |
+| PATCH   | Applies partial modifications to the resource at the specified location.            |
+
+## Status Codes
+
+HTTP status codes are used to tell the client the status of their request. An HTTP server can return five classes of status codes:
+
+| Class | Description                                                                      |
+|-------|----------------------------------------------------------------------------------|
+| 1xx   | Provides information and does not affect the processing of the request.           |
+| 2xx   | Returned when a request succeeds.                                               |
+| 3xx   | Returned when the server redirects the client.                                   |
+| 4xx   | Signifies improper requests from the client. For example, requesting a resource that doesn't exist or requesting a bad format. |
+| 5xx   | Returned when there is some problem with the HTTP server itself.                 |
+
+## CRUD API
+
+| Operation | HTTP Method | Description                                    |
+|-----------|-------------|------------------------------------------------|
+| Create    | POST       | Adds the specified data to the database table  |
+| Read      | GET        | Reads the specified entity from the database table  |
+| Update    | PUT        | Updates the data of the specified database table |
+| Delete    | DELETE     | Removes the specified row from the database table |
