@@ -1,1 +1,14 @@
+Introduction
+
+Web applications are interactive applications that run on web browsers. Web applications usually adopt a client-server architecture to run and handle interactions. 
+They typically have front end components (i.e., the website interface, or "what the user sees") that run on the client-side (browser) and other back end components 
+(web application source code) that run on the server-side (back end server/databases).
+
+Web Application Infrastructure
+Web applications can use many different infrastructure setups. These are also called models. The most common ones can be grouped into the following four types:
+
+Client-Server
+One Server
+Many Servers - One Database
+Many Servers - Many Databases
 
