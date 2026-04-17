@@ -12,3 +12,43 @@ One Server
 Many Servers - One Database
 Many Servers - Many Databases
 
+Front End vs. Back End
+
+Front End
+The front end of a web application contains the user's components directly through their web browser (client-side). 
+These components make up the source code of the web page we view when visiting a web application and usually include HTML, CSS, and JavaScript, 
+which is then interpreted in real-time by our browsers.
+
+Back End
+The back end of a web application drives all of the core web application functionalities, all of which is executed at the back end server, which processes everything required for the web application to run correctly. 
+It is the part we may never see or directly interact with, but a website is just a collection of static web pages without a back end.
+
+URL Encoding
+An important concept to learn in HTML is URL Encoding, or percent-encoding. For a browser to properly display a page's contents, it has to know the charset in use. In URLs, for example, browsers can only use ASCII encoding, 
+which only allows alphanumerical characters and certain special characters. Therefore, all other characters outside of the ASCII character-set have to be encoded within a URL. URL encoding replaces unsafe ASCII characters with a % symbol followed by two hexadecimal digits.
+For example, the single-quote character ''' is encoded to '%27', which can be understood by browsers as a single-quote. URLs cannot have spaces in them and will replace a space with either a + (plus sign) or %20.
+
+Back End Servers
+A back-end server is the hardware and operating system on the back end that hosts all of the applications necessary to run the web application. It is the real system running all of the processes and carrying out all of the tasks that make up the entire web application. 
+The back end server would fit in the Data access layer.
+
+Combinations	Components
+LAMP	Linux, Apache, MySQL, and PHP.
+WAMP	Windows, Apache, MySQL, and PHP.
+WINS	Windows, IIS, .NET, and SQL Server
+MAMP	macOS, Apache, MySQL, and PHP.
+XAMPP	Cross-Platform, Apache, MySQL, and PHP/PERL.
+
+Web Servers
+A web server is an application that runs on the back end server, which handles all of the HTTP traffic from the client-side browser, routes it to the requested pages, 
+and finally responds to the client-side browser. Web servers usually run on TCP ports 80 or 443, and are responsible for connecting end-users to various parts of 
+the web application, in addition to handling their various responses.
+
+Databases
+Web applications utilize back end databases to store various content and information related to the web application. 
+This can be core web application assets like images and files, web application content like posts and updates, or user data like usernames and passwords. 
+This allows web applications to easily and quickly store and retrieve data and enable dynamic content that is different for each user.
+
+There are many different types of databases, each of which fits a certain type of use. Most developers look for certain characteristics in a database, 
+such as speed in storing and retrieving data, size when storing large amounts of data, scalability as the web application grows, and cost.
+
