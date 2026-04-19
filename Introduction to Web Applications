@@ -52,3 +52,22 @@ This allows web applications to easily and quickly store and retrieve data and e
 There are many different types of databases, each of which fits a certain type of use. Most developers look for certain characteristics in a database, 
 such as speed in storing and retrieving data, size when storing large amounts of data, scalability as the web application grows, and cost.
 
+SOAP
+The SOAP (Simple Objects Access) standard shares data through XML, where the request is made in XML through an HTTP request, and the response is also returned in XML. 
+Front end components are designed to parse this XML output properly.
+SOAP is very useful for transferring structured data (i.e., an entire class object), or even binary data, and is often used with serialized objects, all of which enables sharing complex data between front end and back end components and parsing it properly. 
+It is also very useful for sharing stateful objects -i.e., sharing/changing the current state of a web page-, which is becoming more common with modern web applications and mobile applications.
+However, SOAP may be difficult to use for beginners or require long and complicated requests even for smaller queries, like basic search or filter queries. This is where the REST API standard is more useful.
+
+REST
+The REST (Representational State Transfer) standard shares data through the URL path 'i.e. search/users/1', and usually returns the output in JSON format 'i.e. userid 1'.
+Unlike Query Parameters, REST APIs usually focus on pages that expect one type of input passed directly through the URL path, without specifying its name or type. This is usually useful for queries like search, sort, or filter. 
+This is why REST APIs usually break web application functionality into smaller APIs and utilize these smaller API requests to allow the web application to perform more advanced actions, making the web application more modular and scalable.
+
+Common Vulnerability Scoring System (CVSS)
+The Common Vulnerability Scoring System (CVSS) is an open-source industry standard for assessing the severity of security vulnerabilities. 
+This scoring system is often used as a standard measurement for organizations and governments that need to produce accurate and consistent severity scores for their systems' vulnerabilities. 
+This helps with the prioritization of resources and the response to a given threat.
+
+
+
